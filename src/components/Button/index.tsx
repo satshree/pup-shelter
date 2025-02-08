@@ -30,7 +30,16 @@ export default function Button(props: ButtonProps) {
       onClick={handleClick}
       disabled={props.disabled || props.loading || false}
     >
-      {props.text}
+      {props.loading ? (
+        <div
+          className="spinner-border spinner-border-sm text-light"
+          role="status"
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      ) : (
+        props.text
+      )}
     </button>
   );
 }
