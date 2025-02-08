@@ -18,6 +18,8 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const handleUsernameChange = (value: string) => {
     setUsername(value);
     setUsernameError("");
@@ -42,11 +44,14 @@ export default function SignIn() {
     }
 
     try {
+      setLoading(true);
       await authenticateUser({ name: username, email });
 
       navigate("/");
     } catch (err) {
       console.log("ERROR", err);
+
+      setLoading(false);
       alert("Unable to authenticate");
     }
   };
@@ -74,7 +79,12 @@ export default function SignIn() {
               required={true}
             />
             <br />
-            <Button text="Sign In" block={true} submit={true} />
+            <Button
+              text="Sign In"
+              block={true}
+              submit={true}
+              loading={loading}
+            />
           </form>
         </Card>
       </div>
