@@ -1,14 +1,11 @@
-import axios from "axios";
-import { API_ROOT } from ".";
+import axiosAPI from ".";
 
 import { AuthData } from "../types/api/auth";
 
 export async function loginAPI(data: AuthData) {
-  await axios.post(API_ROOT + "/auth/login", data, {
-    withCredentials: true,
-  });
+  await axiosAPI.post("/auth/login", data);
 }
 
 export async function logoutAPI() {
-  await axios.post(API_ROOT + "/auth/logout");
+  await axiosAPI.post("/auth/logout");
 }
