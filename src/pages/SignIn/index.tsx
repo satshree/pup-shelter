@@ -1,4 +1,7 @@
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { authenticateUser } from "../../utils/api/auth";
 
 import Card from "../../components/Card";
 import Input from "../../components/Input";
@@ -7,24 +10,35 @@ import Button from "../../components/Button";
 import styles from "./page.module.css";
 
 export default function SignIn() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState("");
 
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const handleUsernameChange = (value: string) => {
     setUsername(value);
     setUsernameError("");
   };
 
-  const handlePasswordChange = (value: string) => {
-    setPassword(value);
-    setPasswordError("");
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    setEmailError("");
   };
 
-  const handleSignIn = (e: FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    try {
+      await authenticateUser({ name: username, email });
+
+      navigate("/");
+    } catch (err) {
+      console.log("ERROR", err);
+      alert("Unable to authenticate");
+    }
   };
 
   return (
@@ -33,8 +47,8 @@ export default function SignIn() {
         <Card>
           <form onSubmit={handleSignIn}>
             <Input
-              label="Username"
-              placeholder="Enter your Username"
+              label="Name"
+              placeholder="Enter your Name"
               value={username}
               onChange={handleUsernameChange}
               errorMessage={usernameError}
@@ -42,12 +56,11 @@ export default function SignIn() {
             />
             <br />
             <Input
-              label="Password"
-              placeholder="Enter your Password"
-              password={true}
-              value={password}
-              onChange={handlePasswordChange}
-              errorMessage={passwordError}
+              label="Email"
+              placeholder="Enter your Email"
+              value={email}
+              onChange={handleEmailChange}
+              errorMessage={emailError}
               required={true}
             />
             <br />
