@@ -1,0 +1,29 @@
+.btn {
+  border: none;
+  border-radius: 12px;
+
+  color: white;
+  text-align: center;
+
+  padding: 0.5rem 0.75rem;
+}
+
+.btn:hover {
+  color: white;
+}
+
+.btn-primary {
+  background-color: #4197ff;
+}
+
+.btn-primary:hover {
+  background-color: #1d7ef5;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #d32e3f;
+}
