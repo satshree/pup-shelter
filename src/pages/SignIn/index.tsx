@@ -31,6 +31,16 @@ export default function SignIn() {
   const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (username === "") {
+      setUsernameError("Name is required!");
+      return;
+    }
+
+    if (email === "") {
+      setEmailError("Email is required!");
+      return;
+    }
+
     try {
       await authenticateUser({ name: username, email });
 
