@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+import { useDebounceValue } from "../../hooks";
+
+import { AppDataContext } from "../../context";
 
 import { getDogBreedAPI } from "../../api/dogs";
 import { endUserSession, isLoggedIn } from "../../utils/api/auth";
@@ -9,13 +13,22 @@ import Label from "../Label";
 import Button from "../Button";
 
 import styles from "./header.module.css";
+import { searchDogs } from "../../utils/api/dogs";
 
 export default function Header() {
+  const appDataContext = useContext(AppDataContext);
+  if (!appDataContext) return;
+
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { setDogList, setSearching } = appDataContext;
+
   const [authenticated, setAuthenicated] = useState(isLoggedIn());
+
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounceValue(search, 300);
+
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search a pup...");
 
   useEffect(() => {
@@ -34,6 +47,18 @@ export default function Header() {
 
     if (checkAuth) fetchDogBreeds();
   }, [location]);
+
+  useEffect(() => {
+    const fetchDogList = async () => {
+      setSearching(true);
+      const response = await searchDogs(debouncedSearch);
+
+      setDogList(response.dogs);
+      setSearching(false);
+    };
+
+    fetchDogList();
+  }, [debouncedSearch]);
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
