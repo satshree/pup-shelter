@@ -4,21 +4,26 @@ import { Dog } from "./types/models";
 
 interface ContextType {
   dogList: Dog[];
+  searching: boolean;
   setDogList: (dogList: Dog[]) => void;
+  setSearching: (searching: boolean) => void;
 }
 
-export const DogListContext = createContext<ContextType | undefined>(undefined);
+export const AppDataContext = createContext<ContextType | undefined>(undefined);
 
-export const DogListContextProvider = ({
+export const AppDataContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
   const [dogList, setDogList] = useState<Dog[]>([]);
+  const [searching, setSearching] = useState(false);
 
   return (
-    <DogListContext.Provider value={{ dogList, setDogList }}>
+    <AppDataContext.Provider
+      value={{ dogList, searching, setDogList, setSearching }}
+    >
       {children}
-    </DogListContext.Provider>
+    </AppDataContext.Provider>
   );
 };
