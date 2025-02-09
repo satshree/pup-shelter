@@ -14,6 +14,7 @@ import Button from "../Button";
 
 import styles from "./header.module.css";
 import { searchDogs } from "../../utils/api/dogs";
+import DropdownInput from "../DropdownInput";
 
 export default function Header() {
   const appDataContext = useContext(AppDataContext);
@@ -22,7 +23,8 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { favoriteList, setDogList, setSearching } = appDataContext;
+  const { breedList, favoriteList, setDogList, setBreedList, setSearching } =
+    appDataContext;
 
   const [authenticated, setAuthenicated] = useState(isLoggedIn());
 
@@ -34,6 +36,7 @@ export default function Header() {
   useEffect(() => {
     const fetchDogBreeds = async () => {
       const dogBreedList = await getDogBreedAPI();
+      setBreedList(dogBreedList);
 
       setSearchPlaceholder(
         `Search a pup... ${
@@ -92,10 +95,12 @@ export default function Header() {
         {authenticated ? (
           <>
             <div className={styles.search}>
-              <Input
+              <DropdownInput
                 placeholder={searchPlaceholder}
                 value={search}
                 onChange={handleSearchChange}
+                options={breedList}
+                onOptionClick={(option) => setSearch(option)}
               />
             </div>
             <br />
