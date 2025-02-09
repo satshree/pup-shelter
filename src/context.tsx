@@ -5,9 +5,11 @@ import { Dog } from "./types/models";
 interface ContextType {
   dogList: Dog[];
   searching: boolean;
+  breedList: string[];
   favoriteList: Dog[];
   setDogList: (dogList: Dog[]) => void;
   setSearching: (searching: boolean) => void;
+  setBreedList: (breedList: string[]) => void;
   updateFavoriteList: (newList: Dog[]) => void;
 }
 
@@ -20,6 +22,7 @@ export const AppDataContextProvider = ({
 }) => {
   const [dogList, setDogList] = useState<Dog[]>([]);
   const [searching, setSearching] = useState(false);
+  const [breedList, setBreedList] = useState<string[]>([]);
   const [favoriteList, updateFavoriteList] = useState<Dog[]>([]);
 
   return (
@@ -27,9 +30,11 @@ export const AppDataContextProvider = ({
       value={{
         dogList,
         searching,
+        breedList,
         favoriteList,
         setDogList,
         setSearching,
+        setBreedList,
         updateFavoriteList,
       }}
     >
