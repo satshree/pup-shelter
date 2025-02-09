@@ -7,6 +7,10 @@
   height: 380px;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .favorite {
   color: #4197ff;
 }

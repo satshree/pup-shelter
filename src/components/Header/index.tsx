@@ -5,14 +5,15 @@ import { Modal } from "bootstrap";
 import { AppDataContext } from "../../context";
 
 import { getDogBreedAPI } from "../../api/dogs";
+
+import { searchDogs } from "../../utils/api/dogs";
 import { endUserSession, isLoggedIn } from "../../utils/api/auth";
 
 import Label from "../Label";
 import Button from "../Button";
+import DropdownInput from "../DropdownInput";
 
 import styles from "./header.module.css";
-import { searchDogs } from "../../utils/api/dogs";
-import DropdownInput from "../DropdownInput";
 
 export default function Header() {
   const appDataContext = useContext(AppDataContext);

@@ -3,7 +3,11 @@ import { SearchDogAPIResponse } from "../../types/api/dogs";
 
 import { Pagination } from "../../types/models";
 
-export async function searchDogs(breed: string, from: number = 0) {
+export async function searchDogs(
+  breed: string,
+  from: number = 0,
+  sort: "asc" | "desc" = "asc"
+) {
   const getCurrentPage = (apiResponse: SearchDogAPIResponse) => {
     if (!apiResponse.prev) return 1;
 
@@ -13,7 +17,7 @@ export async function searchDogs(breed: string, from: number = 0) {
     return currentPageBefore + 1;
   };
 
-  const dogSearchResponse = await searchDogAPI(breed, from);
+  const dogSearchResponse = await searchDogAPI(breed, from, sort);
 
   const dogs = await getDogs(dogSearchResponse.resultIds);
 

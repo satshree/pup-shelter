@@ -4,10 +4,11 @@ import { AppDataContext } from "../../context";
 
 import { Dog } from "../../types/models";
 
+import { matchDog } from "../../api/dogs";
+
+import Label from "../Label";
 import Button from "../Button";
 import FavoriteList from "./FavoriteList";
-import { matchDog } from "../../api/dogs";
-import Label from "../Label";
 
 export default function FavoritesModal() {
   const appDataContext = useContext(AppDataContext);

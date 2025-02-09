@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { AppDataContext } from "../../context";
 
@@ -10,6 +10,9 @@ import Badge from "../../components/Badge";
 import FavoritesModal from "../../components/FavoritesModal";
 
 import { searchDogs } from "../../utils/api/dogs";
+
+import ArrowUp from "./icons/ArrowUp";
+import ArrowDown from "./icons/ArrowDown";
 
 import Pup from "../../assets/img/pup.svg";
 import HeartIcon from "../../assets/icon/heart.svg";
@@ -32,19 +35,30 @@ export default function Home() {
     updateFavoriteList,
   } = appDataContext;
 
+  const [sort, setSort] = useState<"asc" | "desc">("asc");
+
   useEffect(() => {
     setSearching(false);
   }, []);
 
-  const handlePaginationClick = async (from: number = 0) => {
+  useEffect(() => {
+    handleSortChange();
+  }, [sort]);
+
+  const fetchDogs = async (from: number) => {
     setSearching(true);
 
-    const response = await searchDogs(currentSearch, from);
+    const response = await searchDogs(currentSearch, from, sort);
 
     setDogList(response.dogs);
     setPagination(response.pagination);
     setSearching(false);
   };
+
+  const handlePaginationClick = async (from: number = 0) =>
+    await fetchDogs(from);
+
+  const handleSortChange = async () => await fetchDogs(0);
 
   const handleAddToFavorite = (dog: Dog) => {
     if (favoriteList.indexOf(dog) === -1) {
@@ -86,8 +100,27 @@ export default function Home() {
           ) : (
             <>
               <div className="d-flex align-items-center justify-content-between w-100">
-                <div>
-                  <Label>Found {pagination.total} results</Label>
+                <div className="d-flex align-items-center justify-content-center">
+                  <span style={{ marginTop: "0.25rem" }}>
+                    <Label>Found {pagination.total} results</Label>
+                    <span
+                      style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }}
+                    >
+                      |
+                    </span>
+                  </span>
+                  <span
+                    className={styles.clickable}
+                    onClick={() => setSort("asc")}
+                  >
+                    <ArrowUp stroke={sort === "asc" ? "#4197FF" : "#000"} />
+                  </span>
+                  <span
+                    className={styles.clickable}
+                    onClick={() => setSort("desc")}
+                  >
+                    <ArrowDown stroke={sort === "desc" ? "#4197FF" : "#000"} />
+                  </span>
                 </div>
                 <div>
                   {searching ? (
@@ -149,7 +182,7 @@ export default function Home() {
                         <div>
                           <Label>
                             <small
-                              className={styles.favorite}
+                              className={`${styles.clickable} ${styles.favorite}`}
                               onClick={() => handleAddToFavorite(dog)}
                             >
                               <img
