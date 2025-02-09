@@ -48,7 +48,7 @@ export default function DropdownInput(props: DropdownInputProps) {
       {value !== "" && show && filteredOptions.length > 0 && (
         <ul
           className="dropdown-menu w-100 mt-2 show"
-          style={{ borderRadius: 12 }}
+          style={{ borderRadius: 12, maxHeight: 400, overflow: "scroll" }}
         >
           {filteredOptions.map((option, index) => (
             <li key={index}>
