@@ -10,3 +10,9 @@ export interface Dog {
 export interface Match {
   match: string;
 }
+
+export interface Pagination {
+  total: number;
+  totalPage: number;
+  currentPage: number;
+}
