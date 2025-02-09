@@ -1,14 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { useDebounceValue } from "../../hooks";
-
 import { AppDataContext } from "../../context";
 
 import { getDogBreedAPI } from "../../api/dogs";
 import { endUserSession, isLoggedIn } from "../../utils/api/auth";
 
-import Input from "../Input";
 import Label from "../Label";
 import Button from "../Button";
 
@@ -23,8 +20,15 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { breedList, favoriteList, setDogList, setBreedList, setSearching } =
-    appDataContext;
+  const {
+    breedList,
+    favoriteList,
+    setDogList,
+    setBreedList,
+    setSearching,
+    setPagination,
+    setCurrentSearch,
+  } = appDataContext;
 
   const [authenticated, setAuthenicated] = useState(isLoggedIn());
 
@@ -55,9 +59,11 @@ export default function Header() {
       const response = await searchDogs(search);
 
       setDogList(response.dogs);
+      setPagination(response.pagination);
       setSearching(false);
     };
 
+    setCurrentSearch(search);
     fetchDogList();
   }, [search]);
 
