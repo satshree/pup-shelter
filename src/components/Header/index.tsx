@@ -22,7 +22,7 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { setDogList, setSearching } = appDataContext;
+  const { favoriteList, setDogList, setSearching } = appDataContext;
 
   const [authenticated, setAuthenicated] = useState(isLoggedIn());
 
@@ -101,7 +101,7 @@ export default function Header() {
             <br />
             <div className="d-flex align-items-center justify-content-center">
               <div>
-                <Button text="Show Favorites" />
+                <Button text={`Favorites (${favoriteList.length})`} />
               </div>
               <div style={{ marginLeft: "0.5rem" }}>
                 <Button
