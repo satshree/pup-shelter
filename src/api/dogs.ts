@@ -12,10 +12,11 @@ export async function getDogBreedAPI(): Promise<string[]> {
 }
 
 export async function searchDogAPI(
-  breed: string
+  breed: string,
+  from: number = 0
 ): Promise<SearchDogAPIResponse> {
   const response = await axiosAPI.get(
-    `/dogs/search/?size=9&sort=breed:asc&breeds=${breed}`
+    `/dogs/search/?size=9&sort=breed:asc&breeds=${breed}&from=${from}`
   );
 
   return response.data;
