@@ -1,0 +1,17 @@
+.header {
+  padding: 1rem;
+  min-height: 280px;
+  background-color: #7ad1b4;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.search {
+  width: 100%;
+  max-width: 700px;
+}
