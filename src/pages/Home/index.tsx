@@ -2,14 +2,19 @@ import { useContext, useEffect } from "react";
 
 import { AppDataContext } from "../../context";
 
+import { Dog } from "../../types/models";
+
 import Card from "../../components/Card";
 import Label from "../../components/Label";
 import Badge from "../../components/Badge";
+import FavoritesModal from "../../components/FavoritesModal";
+
+import { searchDogs } from "../../utils/api/dogs";
 
 import Pup from "../../assets/img/pup.svg";
+import HeartIcon from "../../assets/icon/heart.svg";
 
 import styles from "./page.module.css";
-import { searchDogs } from "../../utils/api/dogs";
 
 export default function Home() {
   const appDataContext = useContext(AppDataContext);
@@ -20,9 +25,11 @@ export default function Home() {
     searching,
     pagination,
     currentSearch,
+    favoriteList,
     setDogList,
     setSearching,
     setPagination,
+    updateFavoriteList,
   } = appDataContext;
 
   useEffect(() => {
@@ -37,6 +44,16 @@ export default function Home() {
     setDogList(response.dogs);
     setPagination(response.pagination);
     setSearching(false);
+  };
+
+  const handleAddToFavorite = (dog: Dog) => {
+    if (favoriteList.indexOf(dog) === -1) {
+      const newFavoriteList = [...favoriteList, dog];
+      updateFavoriteList(newFavoriteList);
+      alert("Pup added to your favorite list.");
+    } else {
+      alert("This pup is in your favorite list.");
+    }
   };
 
   return (
@@ -131,8 +148,15 @@ export default function Home() {
                         </div>
                         <div>
                           <Label>
-                            <small className={styles.favorite}>
-                              Add to Favorites
+                            <small
+                              className={styles.favorite}
+                              onClick={() => handleAddToFavorite(dog)}
+                            >
+                              <img
+                                src={HeartIcon}
+                                style={{ width: 20, height: 20 }}
+                                alt="favorite"
+                              />
                             </small>
                           </Label>
                         </div>
@@ -145,6 +169,8 @@ export default function Home() {
           )}
         </>
       </div>
+
+      <FavoritesModal />
     </>
   );
 }

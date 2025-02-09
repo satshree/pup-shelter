@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Modal } from "bootstrap";
 
 import { AppDataContext } from "../../context";
 
@@ -85,6 +86,14 @@ export default function Header() {
     }
   };
 
+  const showFavoritesModal = () => {
+    const modalElement = document.getElementById("favoritesModal");
+    if (modalElement) {
+      const modal = Modal.getOrCreateInstance(modalElement);
+      modal.show();
+    }
+  };
+
   return (
     <>
       <div className={styles.header}>
@@ -110,7 +119,10 @@ export default function Header() {
             <br />
             <div className="d-flex align-items-center justify-content-center">
               <div>
-                <Button text={`Favorites (${favoriteList.length})`} />
+                <Button
+                  text={`Favorites (${favoriteList.length})`}
+                  onClick={showFavoritesModal}
+                />
               </div>
               <div style={{ marginLeft: "0.5rem" }}>
                 <Button
