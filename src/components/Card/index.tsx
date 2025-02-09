@@ -1,3 +1,5 @@
+import styles from "./card.module.css";
+
 interface CardProps {
   children: React.ReactNode;
   img?: string;
@@ -9,9 +11,8 @@ export default function Card(props: CardProps) {
       {props.img ? (
         <img
           src={props.img}
-          className="card-img-top"
+          className={`card-img-top ${styles.img}`}
           alt="doggo"
-          style={{ height: "200px", objectFit: "cover" }}
         />
       ) : null}
       <div className="card-body">{props.children}</div>
