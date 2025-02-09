@@ -1,7 +1,7 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { authenticateUser } from "../../utils/api/auth";
+import { authenticateUser, endUserSession } from "../../utils/api/auth";
 
 import Card from "../../components/Card";
 import Input from "../../components/Input";
@@ -19,6 +19,10 @@ export default function SignIn() {
   const [emailError, setEmailError] = useState("");
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    endUserSession();
+  }, []);
 
   const handleUsernameChange = (value: string) => {
     setUsername(value);

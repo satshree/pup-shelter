@@ -1,19 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { useDebounceValue } from "../../hooks";
-
 import { AppDataContext } from "../../context";
 
 import { getDogBreedAPI } from "../../api/dogs";
 import { endUserSession, isLoggedIn } from "../../utils/api/auth";
 
-import Input from "../Input";
 import Label from "../Label";
 import Button from "../Button";
 
 import styles from "./header.module.css";
 import { searchDogs } from "../../utils/api/dogs";
+import DropdownInput from "../DropdownInput";
 
 export default function Header() {
   const appDataContext = useContext(AppDataContext);
@@ -22,18 +20,25 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { favoriteList, setDogList, setSearching } = appDataContext;
+  const {
+    breedList,
+    favoriteList,
+    setDogList,
+    setBreedList,
+    setSearching,
+    setPagination,
+    setCurrentSearch,
+  } = appDataContext;
 
   const [authenticated, setAuthenicated] = useState(isLoggedIn());
 
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounceValue(search, 300);
-
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search a pup...");
 
   useEffect(() => {
     const fetchDogBreeds = async () => {
       const dogBreedList = await getDogBreedAPI();
+      setBreedList(dogBreedList);
 
       setSearchPlaceholder(
         `Search a pup... ${
@@ -51,14 +56,16 @@ export default function Header() {
   useEffect(() => {
     const fetchDogList = async () => {
       setSearching(true);
-      const response = await searchDogs(debouncedSearch);
+      const response = await searchDogs(search);
 
       setDogList(response.dogs);
+      setPagination(response.pagination);
       setSearching(false);
     };
 
+    setCurrentSearch(search);
     fetchDogList();
-  }, [debouncedSearch]);
+  }, [search]);
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -92,10 +99,12 @@ export default function Header() {
         {authenticated ? (
           <>
             <div className={styles.search}>
-              <Input
+              <DropdownInput
                 placeholder={searchPlaceholder}
                 value={search}
                 onChange={handleSearchChange}
+                options={breedList}
+                onOptionClick={handleSearchChange}
               />
             </div>
             <br />

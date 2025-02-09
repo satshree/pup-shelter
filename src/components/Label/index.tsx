@@ -8,7 +8,7 @@ interface LabelProps {
 
 export default function Label(props: LabelProps) {
   const fontSize =
-    props.type === "title" ? 48 : props.type === "subtitle" ? 24 : 16;
+    props.type === "title" ? 32 : props.type === "subtitle" ? 22 : 16;
 
   const color = props.color || "#000";
 
