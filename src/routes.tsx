@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 
 import { isLoggedIn } from "./utils/api/auth";
+import Footer from "./components/Footer";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Layout = () => {
     <>
       <Header />
       <Outlet />
+      <Footer />
     </>
   );
 };

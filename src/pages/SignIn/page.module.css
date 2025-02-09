@@ -1,8 +1,9 @@
 .page {
   padding: 1rem;
+  flex-grow: 1;
 
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
 }
 
