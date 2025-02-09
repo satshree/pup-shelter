@@ -3,6 +3,7 @@ import { createBrowserRouter, Outlet, useNavigate } from "react-router-dom";
 
 import Header from "./components/Header";
 
+import Lost from "./pages/Lost";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 
@@ -39,5 +40,9 @@ export const router = createBrowserRouter([
         element: <SignIn />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Lost />,
   },
 ]);
