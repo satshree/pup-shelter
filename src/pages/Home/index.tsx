@@ -42,11 +42,30 @@ export default function Home() {
                 ) : (
                   <Label>Start by searching dog breeds</Label>
                 )}
-                {JSON.stringify(searching)}
               </div>
             </>
           ) : (
             <>
+              <div
+                className="d-flex align-items-center justify-content-center w-100"
+                style={{ height: 50 }}
+              >
+                {searching ? (
+                  <>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <div
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                      <div style={{ marginLeft: "0.25rem" }}>
+                        <Label>Searching ...</Label>
+                      </div>
+                    </div>
+                  </>
+                ) : null}
+              </div>
               <div className="row">
                 {dogList.map((dog) => (
                   <div key={dog.id} className="col-sm-4 mb-3">
