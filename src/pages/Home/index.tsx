@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { AppDataContext } from "../../context";
 
@@ -6,14 +6,19 @@ import Card from "../../components/Card";
 import Label from "../../components/Label";
 import Badge from "../../components/Badge";
 
-import styles from "./page.module.css";
 import Pup from "../../assets/img/pup.svg";
+
+import styles from "./page.module.css";
 
 export default function Home() {
   const appDataContext = useContext(AppDataContext);
   if (!appDataContext) return;
 
-  const { dogList, searching } = appDataContext;
+  const { dogList, searching, setSearching } = appDataContext;
+
+  useEffect(() => {
+    setSearching(false);
+  }, []);
 
   return (
     <>
@@ -37,6 +42,7 @@ export default function Home() {
                 ) : (
                   <Label>Start by searching dog breeds</Label>
                 )}
+                {JSON.stringify(searching)}
               </div>
             </>
           ) : (
