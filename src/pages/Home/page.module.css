@@ -6,3 +6,18 @@
   width: 380px;
   height: 380px;
 }
+
+.favorite {
+  color: #4197ff;
+}
+
+.favorite:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media (max-width: 568px) {
+  .favorite {
+    text-decoration: underline;
+  }
+}

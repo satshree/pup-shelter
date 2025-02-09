@@ -2,7 +2,9 @@ import { useContext } from "react";
 
 import { AppDataContext } from "../../context";
 
+import Card from "../../components/Card";
 import Label from "../../components/Label";
+import Badge from "../../components/Badge";
 
 import styles from "./page.module.css";
 import Pup from "../../assets/img/pup.svg";
@@ -38,7 +40,36 @@ export default function Home() {
               </div>
             </>
           ) : (
-            <>{JSON.stringify(dogList)}</>
+            <>
+              <div className="row">
+                {dogList.map((dog) => (
+                  <div key={dog.id} className="col-sm-4 mb-3">
+                    <Card img={dog.img}>
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div>
+                          <div className="d-flex align-items-center">
+                            <Label>{dog.name}</Label>
+                            <Label>
+                              <small style={{ marginLeft: "0.25rem" }}>
+                                [Age: {dog.age}]
+                              </small>
+                            </Label>
+                          </div>
+                          <Badge text={dog.breed} />
+                        </div>
+                        <div>
+                          <Label>
+                            <small className={styles.favorite}>
+                              Add to Favorites
+                            </small>
+                          </Label>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </>
       </div>
