@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useDebounceValue } from "../../hooks";
 
 import Input, { InputProps } from "../Input";
 
@@ -8,29 +10,31 @@ interface DropdownInputProps extends InputProps {
 }
 
 export default function DropdownInput(props: DropdownInputProps) {
+  const [show, setShow] = useState(false);
   const [value, setValue] = useState("");
+  const debouncedValue = useDebounceValue(value, 300);
+
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
 
-  const handleChange = (value: string) => {
-    setValue(value);
+  useEffect(() => {
     const filtered = props.options.filter((option) =>
-      option.toLowerCase().includes(value.toLowerCase())
+      option.toLowerCase().includes(debouncedValue.toLowerCase())
     );
     setFilteredOptions(filtered);
 
     if (value === "") props.onChange("");
+  }, [debouncedValue]);
+
+  const handleChange = (value: string) => {
+    setValue(value);
+    setShow(true);
   };
 
   const handleSelect = (option: string) => {
+    setShow(false);
     setValue(option);
     setFilteredOptions([]);
     props.onOptionClick(option);
-  };
-
-  const handleKeyDown = (value: string) => {
-    setValue(value);
-    setFilteredOptions([]);
-    props.onOptionClick(value);
   };
 
   return (
@@ -39,9 +43,9 @@ export default function DropdownInput(props: DropdownInputProps) {
         placeholder={props.placeholder}
         value={value}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleSelect}
       />
-      {value !== "" && filteredOptions.length > 0 && (
+      {value !== "" && show && filteredOptions.length > 0 && (
         <ul
           className="dropdown-menu w-100 mt-2 show"
           style={{ borderRadius: 12 }}

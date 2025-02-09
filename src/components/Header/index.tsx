@@ -29,8 +29,6 @@ export default function Header() {
   const [authenticated, setAuthenicated] = useState(isLoggedIn());
 
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounceValue(search, 300);
-
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search a pup...");
 
   useEffect(() => {
@@ -54,14 +52,14 @@ export default function Header() {
   useEffect(() => {
     const fetchDogList = async () => {
       setSearching(true);
-      const response = await searchDogs(debouncedSearch);
+      const response = await searchDogs(search);
 
       setDogList(response.dogs);
       setSearching(false);
     };
 
     fetchDogList();
-  }, [debouncedSearch]);
+  }, [search]);
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -100,7 +98,7 @@ export default function Header() {
                 value={search}
                 onChange={handleSearchChange}
                 options={breedList}
-                onOptionClick={(option) => setSearch(option)}
+                onOptionClick={handleSearchChange}
               />
             </div>
             <br />
