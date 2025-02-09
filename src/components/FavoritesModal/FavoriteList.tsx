@@ -54,7 +54,7 @@ export default function FavoriteList() {
                         <Label>{dog.name}</Label>
                         <Label>
                           <small style={{ marginLeft: "0.25rem" }}>
-                            [Age: {dog.age}]
+                            &#91;Age: {dog.age}&#93;
                           </small>
                         </Label>
                       </div>
