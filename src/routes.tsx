@@ -6,15 +6,13 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 
-import { loadFromLocalStorage } from "./utils/storage";
+import { isLoggedIn } from "./utils/api/auth";
 
 const Layout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedAuth = loadFromLocalStorage("auth");
-
-    if (!savedAuth) {
+    if (!isLoggedIn()) {
       navigate("/signin");
     }
   }, []);
