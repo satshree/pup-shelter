@@ -3,10 +3,12 @@ import { createBrowserRouter, Outlet, useNavigate } from "react-router-dom";
 
 import Header from "./components/Header";
 
+import Lost from "./pages/Lost";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 
 import { isLoggedIn } from "./utils/api/auth";
+import Footer from "./components/Footer";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ const Layout = () => {
     <>
       <Header />
       <Outlet />
+      <Footer />
     </>
   );
 };
@@ -39,5 +42,9 @@ export const router = createBrowserRouter([
         element: <SignIn />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Lost />,
   },
 ]);

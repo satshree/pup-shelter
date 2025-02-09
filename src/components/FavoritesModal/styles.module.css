@@ -1,0 +1,14 @@
+.remove {
+  color: #dc3545;
+}
+
+.remove:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media (max-width: 568px) {
+  .remove {
+    text-decoration: underline;
+  }
+}
