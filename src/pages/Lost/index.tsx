@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
 import Label from "../../components/Label";
+import Button from "../../components/Button";
 
 import LostBro from "../../assets/img/Lost-bro.svg";
-import Button from "../../components/Button";
 
 export default function Lost() {
   const navigate = useNavigate();
